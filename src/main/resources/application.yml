@@ -1,0 +1,40 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/chaelog
+    username: sa
+    password: 1234
+    driver-class-name: org.h2.Driver
+#  sql:
+#    init:
+#      mode: always
+
+  jpa:
+    defer-datasource-initialization: true
+
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql : true
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug #logger
+    org.hibernate.orm.jdbc.bind: trace #?? ???? ?? ???
+
+chaewon:
+  jwt-key: "dQNuNHbCoi7j7aeRlv3m1QeXM4hUtkKxV/Ji6J8RIoU="
