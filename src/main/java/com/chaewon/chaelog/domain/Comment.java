@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
         }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +29,16 @@ public class Comment {
 
     //생성일자
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
     @Builder
-    public Comment(String content, String author, String password) {
+    public Comment(String content, String author, String password, Post post) {
         this.content = content;
         this.author = author;
         this.password = password;
+        this.post = post;
     }
 
     public void setPost(Post post) {

@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
     private final AppConfig appConfig;
 
-    @PostMapping("/auth/signup")
+    @PostMapping("/api/auth/signup")
     public void signup(@RequestBody SignupRequest signup) {
         authService.signup(signup);
     }

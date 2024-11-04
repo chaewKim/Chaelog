@@ -33,26 +33,26 @@ public class PostController {
 
     //글 작성
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/posts")
+    @PostMapping("/api/posts")
     public void post(@AuthenticationPrincipal MemberPrincipal memberPrincipal, @RequestBody @Valid PostCreateRequest request) {
         postService.write(memberPrincipal.getMemberId(), request);
     }
 
     //게시글 단건조회
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/api/posts/{postId}")
     public PostResponse get(@PathVariable("postId") Long postId) {
         return postService.get(postId);
     }
 
     //게시글 리스트 조회
-    @GetMapping("/posts")
+    @GetMapping("/api/posts")
     public PagingResponse<PostResponse> getList(@ModelAttribute PostSearchRequest postSearch) {
         return postService.getList(postSearch);
     }
 
     //수정
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PatchMapping("/posts/{postId}")
+    @PatchMapping("/api/posts/{postId}")
     public void edit(@PathVariable("postId") Long postId, @RequestBody @Valid PostEditRequest request) {
         postService.edit(postId, request);
     }
@@ -60,7 +60,7 @@ public class PostController {
     //삭제
     // 권한 검사를 위한 PreAuthorize 사용
     @PreAuthorize("hasRole('ROLE_ADMIN') && hasPermission(#p0, 'POST', 'DELETE')")
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/api/posts/{postId}")
     public void delete(@PathVariable("postId") Long postId) {
         log.info("삭제할 게시글 ID: {}", postId);
         postService.delete(postId);  // 권한 검사를 통과한 경우 삭제 수행

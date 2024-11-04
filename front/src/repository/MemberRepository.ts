@@ -1,6 +1,7 @@
 import HttpRepository from '@/repository/HtttpRepository'
 import Login from '@/Entity/member/Login'
 import { inject, singleton } from 'tsyringe'
+import MemberProfile from '@/Entity/member/MemberProfile'
 
 @singleton()
 export default class MemberRepository {
@@ -10,5 +11,14 @@ export default class MemberRepository {
       path: '/api/auth/login',
       body: request
     })
+  }
+
+  public getProfile() {
+    return this.httpRepository.get<MemberProfile>(
+      {
+        path: '/api/members/me'
+      },
+      MemberProfile
+    )
   }
 }

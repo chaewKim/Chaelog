@@ -1,9 +1,7 @@
 import { inject, singleton } from 'tsyringe'
 import HttpRepository from '@/repository/HtttpRepository'
 import PostWrite from '@/Entity/post/PostWrite'
-import { plainToClass, plainToInstance } from 'class-transformer'
 import Post from '@/Entity/post/Post'
-import Paging from '@/Entity/data/Paging'
 
 @singleton()
 export default class PostRepository {
@@ -18,26 +16,34 @@ export default class PostRepository {
     })
   }
 
-  public get(postId: number): Promise<Post> {
-    return this.httpRepository
-      .get({
+  public get(postId: number) {
+    return this.httpRepository.get<Post>(
+      {
         path: `/api/posts/${postId}`
-      })
-      .then((response) => {
-        return plainToInstance(Post, response)
-      })
+      },
+      Post
+    )
   }
 
-  public getList(page: number): Promise<Paging<Post>> {
-    return this.httpRepository
-      .get({
+  public getList(page: number) {
+    return this.httpRepository.getList<Post>(
+      {
         path: `/api/posts?page=${page}&size=3`
-      })
-      .then((response) => {
-        const paging = plainToInstance<Paging<Post>, any>(Paging, response)
-        const items = plainToInstance<Post, any>(Post, response.items)
-        paging.setItems(items)
-        return paging
-      })
+      },
+      Post
+    )
+  }
+  public delete(postId: number) {
+    return this.httpRepository.delete({
+      path: `/api/posts/${postId}`
+    })
+  }
+
+  // update 메서드 추가
+  public update(postId: number, request: PostWrite) {
+    return this.httpRepository.patch({
+      path: `/api/posts/${postId}`,
+      body: request
+    })
   }
 }

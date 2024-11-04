@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PostEditor {
+public class PostEditor extends BaseTimeEntity{
     private final String title;
     private final String content;
 

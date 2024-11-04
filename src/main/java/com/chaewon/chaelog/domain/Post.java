@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Post {
+public class Post extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +28,11 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    @Column(nullable = false)
-    private LocalDateTime regDate;
-
     @Builder
     public Post(String title, String content, Member member) {
         this.title = title;
         this.content = content;
         this.member = member;
-        this.regDate = LocalDateTime.now();
     }
 
     //생성메서드

@@ -4,6 +4,8 @@ import { container } from 'tsyringe'
 import PostRepository from '@/repository/PostRepository'
 import Post from '@/Entity/post/Post'
 import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import CommentsComponents from '@/components/CommentsComponents.vue'
 
 const props = defineProps<{
   postId: number
@@ -17,6 +19,7 @@ type StateType = {
 const state = reactive<StateType>({
   post: new Post()
 })
+
 function getPost() {
   POST_REPOSITORY.get(props.postId)
     .then((post: Post) => {
@@ -32,6 +35,24 @@ const router = useRouter()
 onMounted(() => {
   getPost()
 })
+//게시글 삭제
+function remove() {
+  ElMessageBox.confirm('정말로 삭제하시겠습니까?', 'Warning', {
+    title: '삭제',
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소',
+    type: 'warning'
+  }).then(() => {
+    POST_REPOSITORY.delete(props.postId).then(() => {
+      ElMessage({ type: 'success', message: '성공적으로 삭제되었습니다.' })
+      router.back()
+    })
+  })
+}
+// 게시글 수정 페이지로 이동
+function edit() {
+  router.push({ name: 'edit', params: { postId: props.postId } })
+}
 </script>
 <template>
   <el-row>
@@ -55,15 +76,15 @@ onMounted(() => {
       </div>
 
       <div class="footer">
-        <div class="edit">수정</div>
-        <div class="delete">삭제</div>
+        <div class="edit" @click="edit()">수정</div>
+        <div class="delete" @click="remove()">삭제</div>
       </div>
     </el-col>
   </el-row>
 
   <el-row class="comments">
     <el-col>
-      <Comments />
+      <CommentsComponents :postId="props.postId" />
     </el-col>
   </el-row>
 </template>

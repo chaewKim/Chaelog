@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,13 +22,11 @@ public class Member {
     private String name;
     private String email; //로그인 아이디
     private String password;
-    private LocalDateTime createAt;
 
     @Builder
     public Member(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.createAt = LocalDateTime.now();
     }
 }

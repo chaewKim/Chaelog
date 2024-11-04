@@ -8,12 +8,12 @@ import HttpError from '@/http/HttpError'
 import { useRouter } from 'vue-router'
 
 const state = reactive({
-  postWrite: new PostWrite() //key-value
+  postWrite: new PostWrite() //초기값은 빈 객체
 })
 const router = useRouter()
 const POST_REPOSITORY = container.resolve(PostRepository) //의존성 주입
+
 function write() {
-  //Post_Repository.write(state.postWrite)
   POST_REPOSITORY.write(state.postWrite)
     .then(() => {
       //글 등록 완료
@@ -21,7 +21,20 @@ function write() {
       router.replace('/')
     })
     .catch((e: HttpError) => {
-      ElMessage({ type: 'error', message: e.getMessage() })
+      const validationErrors = e.getValidationErrors()
+      if (Object.keys(validationErrors).length > 0) {
+        Object.keys(validationErrors).forEach((field) => {
+          ElMessage({
+            type: 'error',
+            message: validationErrors[field]
+          })
+        })
+      } else {
+        ElMessage({
+          type: 'error',
+          message: e.getMessage()
+        })
+      }
     })
 }
 </script>
