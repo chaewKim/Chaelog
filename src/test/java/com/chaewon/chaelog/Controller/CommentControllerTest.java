@@ -1,28 +1,26 @@
 package com.chaewon.chaelog.Controller;
 
 
-import com.chaewon.chaelog.controller.CommentController;
 import com.chaewon.chaelog.domain.request.CommentCreateRequest;
 import com.chaewon.chaelog.domain.request.CommentDeleteRequest;
 import com.chaewon.chaelog.service.CommentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -37,6 +35,7 @@ public class CommentControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Test
+    @DisplayName("댓글 작성 성공")
     void testWriteComment_Success() throws Exception {
         // Given
         CommentCreateRequest request = new CommentCreateRequest();
@@ -48,12 +47,14 @@ public class CommentControllerTest {
         mockMvc.perform(post("/api/posts/1/comments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(print());
 
         verify(commentService, times(1)).write(anyLong(), any(CommentCreateRequest.class));
     }
 
     @Test
+    @DisplayName("댓글 삭제 성공")
     void testDeleteComment_Success() throws Exception {
         // Given
         CommentDeleteRequest request = new CommentDeleteRequest(1L, "TestPassword");
@@ -64,12 +65,14 @@ public class CommentControllerTest {
         mockMvc.perform(delete("/api/comments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(print());
 
         verify(commentService, times(1)).delete(any(CommentDeleteRequest.class));
     }
 
     @Test
+    @DisplayName("댓글 삭제 실패 - 잘못된 비밀번호")
     void testDeleteComment_InvalidPassword() throws Exception {
         // Given
         CommentDeleteRequest request = new CommentDeleteRequest(1L, "InvalidPassword");
@@ -80,7 +83,9 @@ public class CommentControllerTest {
         mockMvc.perform(delete("/api/comments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value("Invalid password"))
+                .andDo(print());
 
         verify(commentService, times(1)).delete(any(CommentDeleteRequest.class));
     }

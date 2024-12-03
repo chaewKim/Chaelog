@@ -20,5 +20,11 @@ export default defineConfig({
         // rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  build: {
+    sourcemap: false
+  },
+  esbuild: {
+    logOverride: { 'this-is-undefined': 'silent' }
   }
 })

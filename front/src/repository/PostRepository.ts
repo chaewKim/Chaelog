@@ -1,12 +1,25 @@
 import { inject, singleton } from 'tsyringe'
 import HttpRepository from '@/repository/HtttpRepository'
-import PostWrite from '@/Entity/post/PostWrite'
-import Post from '@/Entity/post/Post'
+import PostWrite from '@/entity/post/PostWrite'
+import Post from '@/entity/post/Post'
 
 @singleton()
 export default class PostRepository {
   constructor(@inject(HttpRepository) private readonly httpRepository: HttpRepository) {}
-
+  // 검색 기능 (페이지네이션 지원)
+  public search(keyword: string, page: number, size: number = 3) {
+    const params: any = { page, size }
+    if (keyword.trim()) {
+      params.keyword = keyword
+    }
+    return this.httpRepository.getList<Post>(
+      {
+        path: '/api/posts/search',
+        params: params
+      },
+      Post
+    )
+  }
   public write(request: PostWrite) {
     //PostWrite타입의 변수를 받도록 함
     return this.httpRepository.post({

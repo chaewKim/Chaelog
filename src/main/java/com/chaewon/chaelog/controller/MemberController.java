@@ -17,8 +17,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/api/members/me")  //현재 인증받은 쿠키를 기반으로 요청
-    public ResponseEntity<MemberResponse> getMe(@AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+    @GetMapping("/api/members/me") //현재 인증받느 걸 기반으로 함
+    public ResponseEntity<MemberResponse> getMe(@AuthenticationPrincipal MemberPrincipal memberPrincipal) { //@AuthenticationPrincipal을 통해 인증된 사용자 정보 전달
         if (memberPrincipal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //로그인을 하지 않은 경우 -> UNAUTHORIZED
         }

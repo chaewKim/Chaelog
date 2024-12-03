@@ -1,11 +1,17 @@
 import HttpRepository from '@/repository/HtttpRepository'
-import Login from '@/Entity/member/Login'
+import Login from '@/entity/member/Login'
 import { inject, singleton } from 'tsyringe'
-import MemberProfile from '@/Entity/member/MemberProfile'
+import MemberProfile from '@/entity/member/MemberProfile'
 
 @singleton()
 export default class MemberRepository {
   constructor(@inject(HttpRepository) private readonly httpRepository: HttpRepository) {}
+  public signup(request: { email: string; name: string; password: string }) {
+    return this.httpRepository.post({
+      path: '/api/auth/signup',
+      body: request
+    })
+  }
   public login(request: Login) {
     return this.httpRepository.post({
       path: '/api/auth/login',

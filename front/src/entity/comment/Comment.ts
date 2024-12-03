@@ -7,10 +7,12 @@ export default class Comment {
   public password = ''
   public content = ''
 
-  @Transform(({ value }) => LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) //특정값 서버에서 내려왔을 때 지정한 타입으로 지정
+  @Transform(({ value }) =>
+    typeof value === 'string' ? LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME) : value
+  )
   public regDate = LocalDateTime.now()
 
   public getDisplaySimpleRegDate() {
-    return this.regDate.format(DateTimeFormatter.ofPattern('yyyy-dd-HH'))
+    return this.regDate.format(DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm'))
   }
 }

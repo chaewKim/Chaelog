@@ -12,6 +12,10 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 
 import java.io.IOException;
 
+/*
+* 사용자 로그인 요청 처리하는 필터
+* */
+
 public class EmailPasswordAuthFilter extends AbstractAuthenticationProcessingFilter {
     private final ObjectMapper objectMapper; //json데이터로 받기 위해
 
@@ -22,9 +26,10 @@ public class EmailPasswordAuthFilter extends AbstractAuthenticationProcessingFil
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-
+        //HTTP 요청에서 JSON 형식의 이메일과 비밀번호를 파싱
         EmailPassword emailPassword = objectMapper.readValue(request.getInputStream(), EmailPassword.class);
 
+        //객체 생성해서 인증 위임
         UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken.unauthenticated(
                 emailPassword.email,
                 emailPassword.password

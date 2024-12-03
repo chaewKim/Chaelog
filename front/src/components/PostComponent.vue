@@ -10,8 +10,11 @@ const props = defineProps<{
   <div class="title">
     <router-link :to="{ name: 'post', params: { postId: props.post.id } }">{{ props.post.title }}</router-link>
   </div>
-
-  <div class="regDate">{{ props.post.getDisplaySimpleRegDate() }}</div>
+  <div class="meta">
+    <span class="regDate">{{ props.post.getDisplaySimpleRegDate() }}</span>
+    <span v-if="props.post?.authorName">작성자: {{ props.post.authorName }}</span>
+    <!--    <span class="authorId"> 작성자: {{ props.post.authorName }}</span>-->
+  </div>
 
   <div class="content">
     {{ props.post.content }}

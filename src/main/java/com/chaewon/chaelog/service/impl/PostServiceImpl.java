@@ -9,6 +9,7 @@ import com.chaewon.chaelog.domain.response.PagingResponse;
 import com.chaewon.chaelog.domain.response.PostResponse;
 import com.chaewon.chaelog.exception.MemberNotFound;
 import com.chaewon.chaelog.exception.PostNotFound;
+import com.chaewon.chaelog.exception.Unauthorized;
 import com.chaewon.chaelog.repository.MemberRepository;
 import com.chaewon.chaelog.repository.post.PostRepository;
 import com.chaewon.chaelog.service.PostService;
@@ -18,16 +19,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     private final MemberRepository memberRepository;
+
 
     @Override
     public void write(Long memberId, PostCreateRequest postCreateRequest) {
@@ -37,6 +37,7 @@ public class PostServiceImpl implements PostService {
 //                .build();
         var member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFound::new); //회원 없으면
+
 
         Post post = Post.createPost(postCreateRequest, member);
         postRepository.save(post);
@@ -59,14 +60,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PagingResponse<PostResponse> search(PostSearchRequest request) {
+        Page<Post> posts = postRepository.searchByKeyword(request);
+        return new PagingResponse<>(posts, PostResponse.class);
+    }
+    @Override
     @Transactional
-    public void edit(Long id, PostEditRequest postEditRequest) {
+    public void edit(Long id, PostEditRequest postEditRequest, Long memberId) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
 
+        if(!post.getMember().getId().equals(memberId)) {
+            throw new Unauthorized();
+        }
+
         PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
 
-        PostEditor postEditor = editorBuilder.title(postEditRequest.getTitle())
+        PostEditor postEditor = editorBuilder
+                .title(postEditRequest.getTitle())
                 .content(postEditRequest.getContent())
                 .build();
 
@@ -74,10 +85,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, Long memberId) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
-
+        if(!post.getMember().getId().equals(memberId)) {
+            throw new Unauthorized();
+        }
         postRepository.delete(post);
     }
 }

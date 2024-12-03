@@ -49,7 +49,7 @@ public class AuthControllerTest {
                 .build();
 
         // expected
-        mockMvc.perform(post("/auth/signup")
+        mockMvc.perform(post("/api/auth/signup")
                         .content(objectMapper.writeValueAsString(signup))
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())

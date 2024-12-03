@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import PostWrite from '@/Entity/post/PostWrite'
+import PostWrite from '@/entity/post/PostWrite'
 import { container } from 'tsyringe'
 import PostRepository from '@/repository/PostRepository'
 import { ElMessage } from 'element-plus'
@@ -12,6 +12,7 @@ const state = reactive({
 })
 const router = useRouter()
 const POST_REPOSITORY = container.resolve(PostRepository) //의존성 주입
+const validationErrors: { [key: string]: string } = {}
 
 function write() {
   POST_REPOSITORY.write(state.postWrite)
@@ -20,7 +21,7 @@ function write() {
       ElMessage({ type: 'success', message: '글 등록이 완료되었습니다. :) ' })
       router.replace('/')
     })
-    .catch((e: HttpError) => {
+    .catch((e) => {
       const validationErrors = e.getValidationErrors()
       if (Object.keys(validationErrors).length > 0) {
         Object.keys(validationErrors).forEach((field) => {

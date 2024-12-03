@@ -11,6 +11,7 @@ import com.chaewon.chaelog.repository.post.PostRepository;
 import com.chaewon.chaelog.service.CommentService;
 import com.chaewon.chaelog.service.impl.CommentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,6 +42,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("댓글 작성 성공")
     void testWriteComment_Success() {
         // Given
         Long postId = 1L;
@@ -61,6 +63,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("댓글 작성 실패-존재하지 않는 Post")
     void testWriteComment_PostNotFound() {
         // Given
         Long postId = 1L;
@@ -76,6 +79,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("댓글 삭제 실패-올바르지 않은 비밀번호")
     void testDeleteComment_InvalidPassword() {
         // Given
         CommentDeleteRequest request = new CommentDeleteRequest(1L, "wrongPassword");
@@ -90,6 +94,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("댓글 삭제 성공")
     void testDeleteComment_Success() {
         // Given
         CommentDeleteRequest request = new CommentDeleteRequest(1L, "correctPassword");

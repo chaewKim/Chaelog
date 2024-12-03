@@ -1,6 +1,5 @@
 package com.chaewon.chaelog.domain.request;
 
-import com.chaewon.chaelog.exception.InvalidRequest;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 

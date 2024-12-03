@@ -21,9 +21,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void signup(SignupRequest signupRequest) {
         Optional<Member> memberOptional = memberRepository.findByEmail(signupRequest.getEmail());
+        //이메일 중복 검사
         if(memberOptional.isPresent()) {
             throw new AlreadyExistsEmailException();
         }
+
+        //이메일 중복 아니면 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(signupRequest.getPassword());
 
         Member member = Member.builder()

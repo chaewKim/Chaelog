@@ -3,6 +3,7 @@ package com.chaewon.chaelog.controller;
 import com.chaewon.chaelog.config.AppConfig;
 import com.chaewon.chaelog.domain.request.SignupRequest;
 import com.chaewon.chaelog.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthController {
     private final AppConfig appConfig;
 
     @PostMapping("/api/auth/signup")
-    public void signup(@RequestBody SignupRequest signup) {
+    public void signup(@RequestBody @Valid SignupRequest signup) {
         authService.signup(signup);
     }
 

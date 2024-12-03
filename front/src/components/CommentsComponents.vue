@@ -4,12 +4,16 @@ import CommentComponents from '@/components/CommentComponents.vue'
 import { container } from 'tsyringe'
 import CommentRepository from '@/repository/CommentRepository'
 import { onMounted, reactive } from 'vue'
-import CommentWrite from '@/Entity/comment/CommentWrite'
+import CommentWrite from '@/entity/comment/CommentWrite'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import CommentDeleteRequest from '@/Entity/comment/CommentDeleteRequest'
+import CommentDeleteRequest from '@/entity/comment/CommentDeleteRequest'
+import HttpError from '@/http/HttpError'
+import Comment from '@/entity/comment/Comment'
 
 const COMMENT_REPOSITORY = container.resolve(CommentRepository)
-const props = defineProps<{ postId: number }>()
+const props = defineProps<{
+  postId: number
+}>()
 const state = reactive({
   comments: [] as Comment[],
   commentWrite: new CommentWrite(),
@@ -30,7 +34,23 @@ function addComment() {
       state.commentWrite = new CommentWrite() // 입력란 초기화
       fetchComments()
     })
-    .catch(() => ElMessage.error('댓글 등록에 실패했습니다.'))
+    .catch((e) => {
+      // 서버에서 전송된 유효성 검사 오류 메시지를 처리하는 부분
+      const validationErrors = e.getValidationErrors()
+      if (Object.keys(validationErrors).length > 0) {
+        Object.keys(validationErrors).forEach((field) => {
+          ElMessage({
+            type: 'error',
+            message: validationErrors[field]
+          })
+        })
+      } else {
+        ElMessage({
+          type: 'error',
+          message: e.getMessage()
+        })
+      }
+    })
 }
 
 // 댓글 삭제 시 비밀번호 입력 후 삭제하는 함수
@@ -80,7 +100,7 @@ onMounted(fetchComments)
 
   <ul class="comments">
     <li v-for="comment in state.comments" :key="comment.id">
-      <CommentComponents :comment="comment" @deleteComment="deleteComment" />
+      <CommentComponents :comment="comment as any" @deleteComment="deleteComment" />
     </li>
   </ul>
 </template>

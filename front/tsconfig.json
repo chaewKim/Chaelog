@@ -12,6 +12,10 @@
     }
   ],
   "compilerOptions": {
+    "forceConsistentCasingInFileNames":  true,
+    "skipLibCheck": true,
+    "noEmitOnError": false,
     "module": "NodeNext",
-  }
+  },
+
 }

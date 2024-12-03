@@ -2,11 +2,21 @@
 POST http://localhost:8080/api/auth/signup
 Content-Type: application/json
 
+//{
+//"name": "채원"
+//"email": "chaewon0430@gmail.com",
+//"password": "1234"
+//}
 {
-"name": "채원",
-"email": "chaewon0430@gmail.com",
-"password": "1234"
+  "name": "Kim",
+  "email": "kim11@gmail.com",
+  "password": "1234"
 }
+//{
+//  "name": "Park",
+//  "email": "park11@gmail.com",
+//  "password": "1234"
+//}
 
 ###로그인
 POST http://localhost:8080/api/auth/login

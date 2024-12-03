@@ -13,8 +13,7 @@ public @interface MockMember {
 
     String email() default "chaewon0430@gmail.com";
 
-    String password() default "";
-
+    String password() default "1234";
+}
 //    String role() default "ROLE_ADMIN";
 
-}

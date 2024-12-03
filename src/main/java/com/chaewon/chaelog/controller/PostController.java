@@ -50,19 +50,29 @@ public class PostController {
         return postService.getList(postSearch);
     }
 
-    //수정
+    //게시글 검색
+    @GetMapping("/api/posts/search")
+    public PagingResponse<PostResponse> searchPosts(
+            @ModelAttribute PostSearchRequest searchRequest // @ModelAttribute로 수정
+    ) {
+        return postService.search(searchRequest);
+    }
+    //게시글 수정
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/api/posts/{postId}")
-    public void edit(@PathVariable("postId") Long postId, @RequestBody @Valid PostEditRequest request) {
-        postService.edit(postId, request);
+    public void edit(@PathVariable("postId") Long postId,
+                     @RequestBody @Valid PostEditRequest request,
+                     @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+        postService.edit(postId, request, memberPrincipal.getMemberId());
     }
 
-    //삭제
+    //게시글 삭제
     // 권한 검사를 위한 PreAuthorize 사용
     @PreAuthorize("hasRole('ROLE_ADMIN') && hasPermission(#p0, 'POST', 'DELETE')")
     @DeleteMapping("/api/posts/{postId}")
-    public void delete(@PathVariable("postId") Long postId) {
+    public void delete(@PathVariable("postId") Long postId,
+                       @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         log.info("삭제할 게시글 ID: {}", postId);
-        postService.delete(postId);  // 권한 검사를 통과한 경우 삭제 수행
+        postService.delete(postId,memberPrincipal.getMemberId());  // 권한 검사를 통과한 경우 삭제 수행
     }
 }

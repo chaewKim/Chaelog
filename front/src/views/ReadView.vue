@@ -2,22 +2,27 @@
 import { defineProps, onMounted, reactive, ref } from 'vue'
 import { container } from 'tsyringe'
 import PostRepository from '@/repository/PostRepository'
-import Post from '@/Entity/post/Post'
+import Post from '@/entity/post/Post'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import CommentsComponents from '@/components/CommentsComponents.vue'
+import ProfileRepository from '@/repository/ProfileRepository'
+import MemberProfile from '@/entity/member/MemberProfile'
 
 const props = defineProps<{
   postId: number
 }>()
 
 const POST_REPOSITORY = container.resolve(PostRepository)
+const PROFILE_REPOSITORY = container.resolve(ProfileRepository)
 
 type StateType = {
   post: Post
+  profile: MemberProfile | null
 }
 const state = reactive<StateType>({
-  post: new Post()
+  post: new Post(),
+  profile: null
 })
 
 function getPost() {
@@ -30,10 +35,14 @@ function getPost() {
       console.error(e)
     })
 }
+
 const router = useRouter()
 
 onMounted(() => {
-  getPost()
+  getPost() //게시글 데이터 가져오기
+  PROFILE_REPOSITORY.getProfile().then((profile) => {
+    state.profile = profile
+  })
 })
 //게시글 삭제
 function remove() {
@@ -76,8 +85,8 @@ function edit() {
       </div>
 
       <div class="footer">
-        <div class="edit" @click="edit()">수정</div>
-        <div class="delete" @click="remove()">삭제</div>
+        <div v-if="state.post.authorName === state.profile?.name" class="edit" @click="edit()">수정</div>
+        <div v-if="state.post.authorName === state.profile?.name" class="delete" @click="remove()">삭제</div>
       </div>
     </el-col>
   </el-row>

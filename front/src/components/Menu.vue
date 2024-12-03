@@ -3,7 +3,8 @@ import { onBeforeMount, reactive } from 'vue'
 import { container } from 'tsyringe'
 import MemberRepository from '@/repository/MemberRepository.js'
 import ProfileRepository from '@/repository/ProfileRepository'
-import MemberProfile from '@/Entity/member/MemberProfile'
+import MemberProfile from '@/entity/member/MemberProfile'
+import { ElMessage } from 'element-plus'
 const MEMBER_REPOSITORY = container.resolve(MemberRepository)
 const PROFILE_REPOSITORY = container.resolve(ProfileRepository)
 
@@ -22,7 +23,20 @@ onBeforeMount(() => {
 })
 function logout() {
   PROFILE_REPOSITORY.clear()
-  location.href = '/api/logout'
+  // location.href = '/api/auth/logout'
+  fetch('/api/auth/logout', {
+    method: 'POST',
+    credentials: 'include' // include cookies
+  }).then((response) => {
+    if (response.ok) {
+      ElMessage.success('로그아웃이 되었습니다.')
+      setTimeout(() => {
+        location.href = '/'
+      }, 1000) //1초 후에 페이지 리디렉션
+    } else {
+      ElMessage.error('로그아웃에 실패하였습니다.')
+    }
+  })
 }
 </script>
 <template>
@@ -30,7 +44,10 @@ function logout() {
     <li class="menu">
       <router-link to="/"> 처음으로 </router-link>
     </li>
-
+    <li class="menu" v-if="state.profile === null">
+      <router-link to="/signup"> 회원가입 </router-link>
+      <!-- 회원가입 링크 추가 -->
+    </li>
     <li class="menu" v-if="state.profile !== null">
       <router-link to="/write"> 글 작성 </router-link>
     </li>

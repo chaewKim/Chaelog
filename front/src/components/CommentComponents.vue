@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //댓글 항목 하나 보여주기 위한 컴포넌트
-import Comment from '@/Entity/comment/Comment'
+import Comment from '@/entity/comment/Comment'
 
 const props = defineProps<{
   comment: Comment

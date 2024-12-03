@@ -28,18 +28,28 @@ public class ChaelogPermissionEvaluator implements PermissionEvaluator {
 
         if (targetId == null) {
             log.error("targetId가 null입니다.");
-            return false; //권한 없음으로 처리
+            return false; // 권한 없음으로 처리
         }
 
         var memberPrincipal = (MemberPrincipal) authentication.getPrincipal();
 
-        var post = postRepository.findById((Long) targetId)
-                .orElseThrow(PostNotFound::new);
+        // 게시글 존재 확인 및 권한 확인
+        var post = postRepository.findById((Long) targetId).orElse(null);
+
+        if (post == null) {
+            log.error("[인가실패] 게시글이 존재하지 않습니다. targetId={}", targetId);
+            return false; // 게시글이 없는 경우 권한 없음
+        }
 
         if (!post.getMemberId().equals(memberPrincipal.getMemberId())) {
             log.error("[인가실패] 해당 사용자가 작성한 글이 아닙니다. targetId={}", targetId);
-            return false;
+            return false; // 권한 없음
         }
-        return true;
+
+        return true; // 권한 있음
     }
+
+
+
+
 }

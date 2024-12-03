@@ -2,7 +2,7 @@
 import { defineProps, onMounted, reactive } from 'vue'
 import { container } from 'tsyringe'
 import PostRepository from '@/repository/PostRepository'
-import PostWrite from '@/Entity/post/PostWrite'
+import PostWrite from '@/entity/post/PostWrite'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
@@ -11,6 +11,7 @@ const props = defineProps<{
 }>()
 
 const POST_REPOSITORY = container.resolve(PostRepository)
+const validationErrors: { [key: string]: string } = {}
 
 const state = reactive({
   postWrite: new PostWrite()

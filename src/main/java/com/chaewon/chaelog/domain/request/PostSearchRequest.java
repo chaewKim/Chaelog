@@ -10,13 +10,15 @@ import static java.lang.Math.min;
 @Setter
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostSearchRequest {
     private static final int MAX_PAGE = 999;
     private static final int MAX_SIZE = 2000;
 
     @Builder.Default
     private Integer page = 1;
-
+    private String keyword = "";
     @Builder.Default
     private Integer size = 10;
     public void setPage(Integer page) {
@@ -30,10 +32,4 @@ public class PostSearchRequest {
         return PageRequest.of(page -1 , size);
     }
 
-    public PostSearchRequest() {}
-
-    public PostSearchRequest(Integer page, Integer size) {
-        this.page = page;
-        this.size = size;
-    }
 }

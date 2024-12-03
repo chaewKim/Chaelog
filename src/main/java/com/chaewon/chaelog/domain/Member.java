@@ -17,8 +17,8 @@ public class Member extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<Post> posts;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Post> posts;
     private String name;
     private String email; //로그인 아이디
     private String password;

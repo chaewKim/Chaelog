@@ -15,6 +15,7 @@ include::{snippets}/post-inquiry/http-request.adoc[]
 
 include::{snippets}/post-inquiry/path-parameters.adoc[]
 
+
 === 응답
 
 include::{snippets}/post-inquiry/http-response.adoc[]
@@ -27,9 +28,21 @@ include::{snippets}/post-inquiry/response-fields.adoc[]
 
 include::{snippets}/post-create/http-request.adoc[]
 
+./gradlew test --scan
 include::{snippets}/post-create/request-fields.adoc[]
 
 === 응답
 
 include::{snippets}/post-create/http-response.adoc[]
 
+== 글 여러 개 조회
+
+=== 요청
+
+include::{snippets}/post-list/http-request.adoc[]
+
+=== 응답
+
+include::{snippets}/post-list/http-response.adoc[]
+
+include::{snippets}/post-list/response-fields.adoc[]

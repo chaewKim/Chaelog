@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import Login from '@/Entity/member/Login'
+import Login from '@/entity/member/Login'
 import { ElMessage } from 'element-plus'
 import HttpError from '@/http/HttpError'
 import MemberRepository from '@/repository/MemberRepository'
@@ -29,11 +29,11 @@ function doLogin() {
     <el-col :span="10" :offset="7">
       <el-form label-position="top">
         <el-form-item label="이메일">
-          <el-input v-model="state.login.email"></el-input>
+          <el-input v-model="state.login.email" placeholder="이메일을 입력하세요."></el-input>
         </el-form-item>
 
         <el-form-item label="비밀번호">
-          <el-input type="password" v-model="state.login.password"></el-input>
+          <el-input type="password" v-model="state.login.password" placeholder="비밀번호를 입력하세요."></el-input>
         </el-form-item>
 
         <el-form-item>

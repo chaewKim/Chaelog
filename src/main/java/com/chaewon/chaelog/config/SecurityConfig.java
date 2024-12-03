@@ -8,6 +8,7 @@ import com.chaewon.chaelog.config.handler.LoginSuccessHandler;
 import com.chaewon.chaelog.domain.Member;
 import com.chaewon.chaelog.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,16 +47,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .anyRequest().permitAll() //모든 요청 인증 없이 접근 허용
                 )
                 .exceptionHandling(e -> {
                     e.accessDeniedHandler(new Http403Handler(objectMapper)); //권한 없을 때 발생
-                    e.authenticationEntryPoint(new Http401Handler(objectMapper));
+                    e.authenticationEntryPoint(new Http401Handler(objectMapper)); //인증되지 않았을 때 발생
                 })
                 .rememberMe(rm -> rm.rememberMeParameter("remember") //자동 로그인
                         .alwaysRemember(false)
                                 .tokenValiditySeconds(25920000)
                         )
+                .logout(logout -> logout
+                        .logoutUrl("/api/auth/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.getWriter().flush();
+                        })
+
+                )
                 .addFilterBefore(usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
@@ -75,6 +84,8 @@ public class SecurityConfig {
         filter.setRememberMeServices(rememberMeServices);
         return filter;
     }
+
+    //인증처리 위임
     @Bean
     public AuthenticationManager authenticationManager(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

@@ -4,7 +4,6 @@ import com.chaewon.chaelog.domain.request.PostCreateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,11 +21,12 @@ public class Post extends BaseTimeEntity{
     private Member member;
     private String title;
 
-    @Lob
+
     private String content;
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
+
 
     @Builder
     public Post(String title, String content, Member member) {
@@ -55,9 +55,11 @@ public class Post extends BaseTimeEntity{
         content = postEditor.getContent();
     }
     public Long getMemberId() {
+        if (this.member == null) {
+            throw new IllegalStateException("Member is not set for this post.");
+        }
         return this.member.getId();
     }
-
     public void addComment(Comment comment) {
         comment.setPost(this);
         this.comments.add(comment);
