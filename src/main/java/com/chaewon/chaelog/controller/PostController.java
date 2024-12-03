@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -71,7 +72,7 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_ADMIN') && hasPermission(#p0, 'POST', 'DELETE')")
     @DeleteMapping("/api/posts/{postId}")
     public void delete(@PathVariable("postId") Long postId,
-                       @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+                                       @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         log.info("삭제할 게시글 ID: {}", postId);
         postService.delete(postId,memberPrincipal.getMemberId());  // 권한 검사를 통과한 경우 삭제 수행
     }

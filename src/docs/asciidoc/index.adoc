@@ -6,6 +6,26 @@
 :toc: left
 :toclevels: 1
 :sectlinks:
+=== 회원가입
+==== HTTP 요청
+
+.Request
+[source,http]
+----
+POST /api/auth/signup
+Content-Type: application/json
+----
+
+==== 요청 본문
+
+.Request Body
+include::{snippets}/auth-signup/http-request.adoc[]
+include::{snippets}/auth-signup/request-fields.adoc[]
+
+==== 응답 본문
+
+.Response Body
+include::{snippets}/auth-signup/response-fields.adoc[]
 
 == 글 단건조회
 

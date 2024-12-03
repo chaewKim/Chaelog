@@ -22,8 +22,7 @@ spring:
     defer-datasource-initialization: true
 
     hibernate:
-      ddl-auto: none
-    properties:
+      ddl-auto: create
       hibernate:
         show_sql : true
         format_sql: true

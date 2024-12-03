@@ -5,6 +5,7 @@ import com.chaewon.chaelog.domain.Member;
 import com.chaewon.chaelog.domain.Post;
 import com.chaewon.chaelog.domain.request.PostCreateRequest;
 import com.chaewon.chaelog.domain.request.PostEditRequest;
+import com.chaewon.chaelog.domain.request.SignupRequest;
 import com.chaewon.chaelog.repository.MemberRepository;
 import com.chaewon.chaelog.repository.post.PostRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -161,10 +163,11 @@ public class PostControllerDocTest {
 
     @Test
     @MockMember
-    @DisplayName("글 삭제 - 작성자만 가능")
+    @DisplayName("게시글 삭제")
     void testDeletePostByAuthor() throws Exception {
         // given
         Member member = memberRepository.findAll().get(0);
+
 
         Post post = Post.builder()
                 .title("제목")
@@ -183,52 +186,4 @@ public class PostControllerDocTest {
                         )
                 ));
     }
-
-//    @Test
-//    @MockMember
-//    @DisplayName("글 수정 실패 - 작성자가 아닌 경우")
-//    void testUpdatePostFailWhenNotAuthor() throws Exception {
-//        // given
-//        Member member = memberRepository.findAll().get(0);
-//
-//        Member otherMember = Member.builder()
-//                .name("Other")
-//                .email("other@example.com")
-//                .password("1234")
-//                .build();
-//        memberRepository.save(otherMember);
-//
-//        Post post = Post.builder()
-//                .title("제목")
-//                .content("내용")
-//                .member(member)
-//                .build();
-//        postRepository.save(post);
-//
-//        PostEditRequest postEdit = PostEditRequest.builder()
-//                .title("수정된 제목")
-//                .content("내용")
-//                .build();
-//
-//        String json = objectMapper.writeValueAsString(postEdit);
-//
-//        // expected
-//        mockMvc.perform(patch("/api/posts/{postId}", post.getId())
-//                        .contentType(APPLICATION_JSON)
-//                        .content(json))
-//                .andExpect(status().isForbidden()) // 권한이 없는 경우
-//                .andDo(document("post-update-fail-not-author",
-//                        pathParameters(
-//                                parameterWithName("postId").description("게시글 ID")
-//                        ),
-//                        requestFields(
-//                                fieldWithPath("title").description("수정할 제목"),
-//                                fieldWithPath("content").description("내용")
-//                        ),
-//                        responseFields(
-//                                fieldWithPath("code").description("에러 코드"),
-//                                fieldWithPath("message").description("에러 메시지")
-//                        )
-//                ));
-//    }
 }
