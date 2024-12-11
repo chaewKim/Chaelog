@@ -6,3 +6,5 @@
 3. 이미지 추가 기능
 4. 글 카테고리
 5. 확장 -> 상품 등록 기능, 주문 기능 추가
+### REST API Documentation
+- **[API Documentation](docs/index.html)**: Local HTML Documentation
