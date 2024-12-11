@@ -69,27 +69,20 @@ https://massive-frill-1a6.notion.site/1590c00226148048ac51dcf6df193ff1?pvs=4
 ## 6. TEST 결과 
 ### -ControllerDocsTest
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/3004637a-33b7-4bd0-8982-09e65d706a61/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/193586e5-6fc0-4c99-9343-f8363279dbfc/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/233a1405-9369-4e05-8276-eba7ed172623/image.png)
+![image (2)](https://github.com/user-attachments/assets/a489bb1f-d561-467a-a90d-6eceed06afd8)
+![image (3)](https://github.com/user-attachments/assets/2594999f-9cc6-458d-a302-4c0914f79afe)
+![image (4)](https://github.com/user-attachments/assets/d1c801ef-4679-48a3-b2a9-4bdf36faa590)
 
 ### -ControllerTest
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/0213fb56-d13b-47a3-9251-d29ac9203938/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/5306bcb4-db31-4784-8ef7-6176e852a9a8/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/830b24f2-d4a3-4c07-8ce4-a372bfdbd3ce/image.png)
+![image (6)](https://github.com/user-attachments/assets/505c7a6e-0f7f-4d21-bb52-cceb270514b3)
+![image (7)](https://github.com/user-attachments/assets/2bc638a4-52f9-40bd-be7b-0495e997703c)
+![image (5)](https://github.com/user-attachments/assets/ba9a616b-b615-4b70-810c-3299291daf5a)
 
 ### -ServiceTest
+![image (10)](https://github.com/user-attachments/assets/b10beb64-ada7-4fc5-96e2-f52e6c9ab8df)
+![image (9)](https://github.com/user-attachments/assets/9d080e1b-f988-4c43-87e6-c962f252ee29)
+![image (8)](https://github.com/user-attachments/assets/800f2a72-870f-4f7b-8b71-3b2d52e7cdb9)
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/0794b01b-2340-4ead-92e2-80c37fe8c436/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/bd84df19-5962-44c6-9f2a-00ce569a8d6e/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9cfc9120-10f6-4563-b5d5-af85fd4194f4/2dafea69-1882-425d-b21d-5b37a51434a8/image.png)
 
 ## 7. 실행화면
   https://massive-frill-1a6.notion.site/1590c0022614805d9976c42191b4b752?pvs=4
