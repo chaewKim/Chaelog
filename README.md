@@ -5,7 +5,9 @@
 Chaelog은 Spring Boot와 Vue.js를 기반으로 한 블로그 플랫폼입니다. 사용자 인증, 게시글 작성/수정/삭제, 댓글 기능 등을 제공하며 RESTful API 설계 및 테스트, 문서화를 학습하기 위해 개발되었습니다.
 
 -개발 기간 : 2024.09.01 ~ 2024.12.11
+
 -참여 인원 : 1명
+
 -github : https://github.com/chaewKim/Chaelog.git
 
 ## 2. 기술 스택
