@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
 
@@ -235,7 +236,7 @@ public class PostControllerTest {
         // when & then
         mockMvc.perform(delete("/api/posts/{postId}",1L )
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden()) // 404 상태 코드 확인
+                .andExpect(status().isNotFound())
                 .andDo(print());
     }
 

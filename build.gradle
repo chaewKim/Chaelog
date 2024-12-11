@@ -48,6 +48,8 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	//Mockito
+//	testImplementation 'org.mockito:mockito-inline:5.5.0'
 
 	// queryDsl 관련 코드생성 기능 제공
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -81,7 +83,6 @@ test {
 
 asciidoctor {
 	inputs.dir snippetsDir
-	configurations 'asciidoctorExt'
 	dependsOn test
 }
 

@@ -26,7 +26,7 @@ public class Http403Handler implements AccessDeniedHandler {
         log.error("[인증오류] 403");
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .code("403")
-                .message("접근할 수 없습니다.")
+                .message("권한이 없습니다.")
                 .build();
 
         response.setContentType(APPLICATION_JSON_VALUE);

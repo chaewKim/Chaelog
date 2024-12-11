@@ -25,7 +25,6 @@ public class AuthServiceImpl implements AuthService {
         if(memberOptional.isPresent()) {
             throw new AlreadyExistsEmailException();
         }
-
         //이메일 중복 아니면 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(signupRequest.getPassword());
 

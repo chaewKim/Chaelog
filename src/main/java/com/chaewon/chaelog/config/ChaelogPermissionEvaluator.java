@@ -34,8 +34,8 @@ public class ChaelogPermissionEvaluator implements PermissionEvaluator {
         var memberPrincipal = (MemberPrincipal) authentication.getPrincipal();
 
         // 게시글 존재 확인 및 권한 확인
-        var post = postRepository.findById((Long) targetId).orElse(null);
-
+//        var post = postRepository.findById((Long) targetId).orElse(null);
+        var post = postRepository.findById((Long) targetId).orElseThrow(PostNotFound::new); // 명시적 예외 발생
         if (post == null) {
             log.error("[인가실패] 게시글이 존재하지 않습니다. targetId={}", targetId);
             return false; // 게시글이 없는 경우 권한 없음

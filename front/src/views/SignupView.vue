@@ -24,7 +24,7 @@ function doSignup() {
     .then(() => {
       ElMessage({ type: 'success', message: '회원가입에 성공했습니다!' })
       setTimeout(() => {
-        location.href = '/login' // 로그인 페이지로 리디렉션
+        location.href = '/' // 로그인 페이지로 리디렉션
       }, 1000)
     })
     .catch((e: HttpError) => {

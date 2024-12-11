@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -39,7 +40,8 @@ public class EmailPasswordAuthFilter extends AbstractAuthenticationProcessingFil
     }
 
    @Getter
-   private static class EmailPassword {
+   @Setter
+   public static class EmailPassword {
         private String email;
         private String password;
    }

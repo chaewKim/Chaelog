@@ -10,7 +10,7 @@ spring:
       initialize-schema: always
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/chaelog
+    url: jdbc:h2:tcp://localhost/~/Chaelog
     username: sa
     password: 1234
     driver-class-name: org.h2.Driver
@@ -19,10 +19,12 @@ spring:
 #      mode: always
 
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
 
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
+
       hibernate:
         show_sql : true
         format_sql: true

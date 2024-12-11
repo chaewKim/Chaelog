@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.naming.AuthenticationException;
+
 @Slf4j
 @ControllerAdvice
 public class ExceptionController {
@@ -63,5 +65,13 @@ public class ExceptionController {
 
         return response;
     }
-
+    @ResponseBody
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+        ErrorResponse body = ErrorResponse.builder()
+                .code("401")
+                .message("로그인이 필요합니다.")
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
 }

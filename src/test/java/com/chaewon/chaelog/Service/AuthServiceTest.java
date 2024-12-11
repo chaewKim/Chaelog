@@ -1,5 +1,6 @@
 package com.chaewon.chaelog.Service;
 
+import com.chaewon.chaelog.config.MemberPrincipal;
 import com.chaewon.chaelog.domain.Member;
 import com.chaewon.chaelog.domain.request.SignupRequest;
 import com.chaewon.chaelog.exception.AlreadyExistsEmailException;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +24,8 @@ class AuthServiceTest {
 
     @Autowired
     private AuthServiceImpl authService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @AfterEach
     void clean() {
@@ -71,5 +75,56 @@ class AuthServiceTest {
         //expected
         assertThrows(AlreadyExistsEmailException.class, () -> authService.signup(signup));
     }
+    @Test
+    @DisplayName("로그인 성공 테스트")
+    void shouldLoginSuccessfully() {
+        // given
+        memberRepository.save(Member.builder()
+                .email("test@example.com")
+                .password(passwordEncoder.encode("password123"))
+                .name("Test User")
+                .build());
 
+        // when
+        MemberPrincipal principal = (MemberPrincipal) memberRepository.findByEmail("test@example.com")
+                .map(MemberPrincipal::new)
+                .orElseThrow();
+
+        // then
+        assertEquals("test@example.com", principal.getUsername());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 테스트 - 사용자 미존재")
+    void shouldFailWhenUserDoesNotExist() {
+        // given
+        String email = "nonexistent@example.com";
+
+        // when & then
+        assertThrows(RuntimeException.class, () -> {
+            memberRepository.findByEmail(email)
+                    .map(MemberPrincipal::new)
+                    .orElseThrow(() -> new RuntimeException("사용자가 존재하지 않습니다."));
+        });
+    }
+
+    @Test
+    @DisplayName("로그인 실패 테스트 - 비밀번호 불일치")
+    void shouldFailWhenPasswordIsIncorrect() {
+        // given
+        memberRepository.save(Member.builder()
+                .email("test@example.com")
+                .password(passwordEncoder.encode("password123"))
+                .name("Test User")
+                .build());
+
+        // when
+        Member member = memberRepository.findByEmail("test@example.com").orElseThrow();
+        boolean matches = passwordEncoder.matches("wrongpassword", member.getPassword());
+
+        // then
+        assertFalse(matches, "비밀번호가 일치하지 않습니다.");
+    }
 }
+
+
