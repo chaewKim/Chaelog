@@ -63,7 +63,7 @@ Chaelog의 아키텍처는 **클라이언트-서버 모델**을 기반으로 설
     - 데이터베이스: AWS RDS 또는 MySQL 서버
  
 ## 4. 시퀀스 다이어그램
-https://massive-frill-1a6.notion.site/1590c00226148048ac51dcf6df193ff1?pvs=4
+https://drive.google.com/file/d/1p3bUYRBMSkrH2nz-PTeBflCVXe1Cstmm/view?usp=drive_link
 
 ## 5. API
 [chaelog API.pdf](https://github.com/user-attachments/files/18094554/chaelog.API.pdf)
@@ -87,7 +87,7 @@ https://massive-frill-1a6.notion.site/1590c00226148048ac51dcf6df193ff1?pvs=4
 
 
 ## 7. 실행화면
-  https://massive-frill-1a6.notion.site/1590c0022614805d9976c42191b4b752?pvs=4
+  https://drive.google.com/file/d/1ruYdIxnTRlOsPxO0nu1IkXWa-SJfgvZc/view?usp=drive_link
 
 ## 8. 앞으로의 계획과 느낀점
 - **검색 및 필터링**: 게시글을 제목, 카테고리, 태그, 작성자 등으로 검색하거나 필터링하는 기능을 추가.
