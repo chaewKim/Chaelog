@@ -44,12 +44,15 @@ dependencies {
     testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
+//	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	//Mockito
 //	testImplementation 'org.mockito:mockito-inline:5.5.0'
+
+	//MySql 연동
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	// queryDsl 관련 코드생성 기능 제공
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

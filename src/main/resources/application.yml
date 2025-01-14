@@ -1,41 +1,44 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
   session:
     store-type: jdbc
     jdbc:
       initialize-schema: always
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/Chaelog
-    username: sa
+    url: jdbc:mysql://3.37.192.137:3306/chaelog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: chaewon
     password: 1234
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 20000
 #  sql:
 #    init:
 #      mode: always
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
 
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
 
       hibernate:
         show_sql : true
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
+#        generate_statistics: true
 
 
 logging:
   level:
     org.hibernate.SQL: debug #logger
     org.hibernate.orm.jdbc.bind: trace #?? ???? ?? ???
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 chaewon:
   jwt-key: "dQNuNHbCoi7j7aeRlv3m1QeXM4hUtkKxV/Ji6J8RIoU="
